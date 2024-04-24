@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calcolatore Orario Uscita</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Calcolatore Orario Uscita</h1>
+    <div class="input-container">
+      <label for="inputTime">Inserisci l'orario di quando hai marcato:</label>
+      <input type="time" id="inputTime">
+    </div>
+    <img src="./img/pre-button-image.jpg" alt="Immagine Pre-Bottone" id="preButtonImage">
+    <button onclick="calculateTime()">Calcola la tua libertà</button>
+    <img src="./img/post-button-image.png" alt="Immagine Post-Bottone" id="postButtonImage" style="display: none;">
+	<img src="./img/third-image.png" alt="Terza Immagine" id="thirdImage" style="display: none;">
+    <p id="result"></p>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
