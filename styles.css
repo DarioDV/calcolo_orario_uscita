@@ -66,3 +66,24 @@ img {
   height: auto;
   margin-bottom: 20px;
 }
+@keyframes confetti {
+  0% {
+    transform: translateY(0) rotate(0deg);
+  }
+
+  100% {
+    transform: translateY(50vh) rotate(360deg);
+  }
+}
+
+.confetti {
+  position: fixed;
+  width: 100px;
+  height: 100px;
+  background-image: url('img/post-button-image.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  z-index: 1000;
+  animation: confetti 3s ease-out infinite;
+}
