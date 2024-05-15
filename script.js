@@ -6,14 +6,15 @@ function calculateTime() {
 
   var inputTime = document.getElementById('inputTime').value;
   var additionalTime = document.getElementById('additionalTime').value;
-
+  var tempopausapranzo = document.getElementById('minutipausa').value;
+  
   var time = new Date("2024-01-01T" + inputTime + ":00");
 
   var additionalHours = parseInt(additionalTime.substring(0, 2));
   var additionalMinutes = parseInt(additionalTime.substring(3));
 
   time.setHours(time.getHours() + additionalHours);
-  time.setMinutes(time.getMinutes() + additionalMinutes + 30);
+  time.setMinutes(time.getMinutes() + additionalMinutes + parseInt(tempopausapranzo));
 
   var hours = String(time.getHours()).padStart(2, '0');
   var minutes = String(time.getMinutes()).padStart(2, '0');
