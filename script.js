@@ -24,9 +24,10 @@ function calculateTime() {
 
   document.getElementById('preButtonImage').style.display = 'none';
 
-  if (Number(inputTime) || Number(additionalTime) == 0 ){
-	  document.getElementById('result').innerText = "INSERISCI UN VALORE CORRETTO NEGLI ORARI!!";
+  if (Number(inputTime) || Number(additionalTime) == 0 ){ 
+    document.getElementById('result').innerText = "INSERISCI UN VALORE CORRETTO NEGLI ORARI!!";
     document.getElementById('postButtonImage').style.display = 'none';
+    document.getElementById('thirdImage').style.display = 'none';
     document.getElementById('cineseincu').style.display = 'inline';
   } else if (resultTime > currentTime.toLocaleTimeString()) {
     document.getElementById('result').innerText = "Troppo presto! Devi aspettare le " + resultTime;
