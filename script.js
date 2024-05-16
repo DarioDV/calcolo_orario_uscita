@@ -24,7 +24,7 @@ function calculateTime() {
 
   document.getElementById('preButtonImage').style.display = 'none';
 
-  if (Number(inputTime) || Number(additionalTime) == 0 ){ 
+  if ((Number(inputTime) == 0) || (Number(additionalTime) == 0) ){ 
     document.getElementById('result').innerText = "INSERISCI UN VALORE CORRETTO NEGLI ORARI!!";
     document.getElementById('postButtonImage').style.display = 'none';
     document.getElementById('thirdImage').style.display = 'none';
