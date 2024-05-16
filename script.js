@@ -32,10 +32,12 @@ function calculateTime() {
     document.getElementById('result').innerText = "Troppo presto! Devi aspettare le " + resultTime;
     document.getElementById('postButtonImage').style.display = 'none';
     document.getElementById('thirdImage').style.display = 'inline';
+    document.getElementById('cineseincu').style.display = 'none';
   } else {
     document.getElementById('result').innerText = "Fantastico potevi marcare alle " + resultTime;
     document.getElementById('thirdImage').style.display = 'none';
     document.getElementById('postButtonImage').style.display = 'inline';
+    document.getElementById('cineseincu').style.display = 'none';
 
     for (var i = 0; i < 20; i++) {
       setTimeout(function () {
