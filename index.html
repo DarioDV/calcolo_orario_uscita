@@ -35,7 +35,22 @@
         <img src="./img/cineseincu.jpg" alt="CineseIncu" id="cineseincu" style="display: none;">
     <p id="result"></p>
   </div>
-
+   <!--nataleeee-->
+  <div id="countdown"></div>
+  <script>
+    function countdown() {
+    const now = new Date();
+    const christmas = new Date(now.getFullYear(), 11, 25); // 25 dicembre
+    if (now > christmas) {
+        christmas.setFullYear(christmas.getFullYear() + 1);
+    }
+    const diff = christmas - now;
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    document.getElementById("countdown").innerText = `Mancano ${days} giorni a Natale!`;
+     }
+    countdown();
+    setInterval(countdown, 86400000); // Aggiorna ogni giorno
+   </script>
   <script src="script.js"></script>
 </body>
 </html>
