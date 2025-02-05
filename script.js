@@ -73,7 +73,7 @@ function calculateMonthlyPresence() {
     document.getElementById('presenceResult').innerHTML = "Inserisci valori validi.";
     return;
  }
- if (daysOff < 0 || daysWorked < 1) {
+ if ( (daysOff < 0 || daysWorked < 1) || (daysOff > 30 || daysWorked > 30 ) ) {
   document.getElementById('presenceResult').innerHTML = "Inserisci valori validi.";
   return;
  }
