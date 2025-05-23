@@ -22,4 +22,4 @@ JavaScript <br>
 Se vuoi migliorare questo progetto, sentiti libero di aprire una pull request! 🚀 <br>
 
 ☕ Supporta il progetto <br>
-Se trovi utile questo strumento, puoi offrirmi un CAFFEEEEEEEE 
+Se trovi utile questo strumento, puoi offrirmi un CAFFEEEEEEEE , anzi offrilo A SAVE THE CHILDREN!
