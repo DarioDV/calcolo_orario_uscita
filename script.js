@@ -59,33 +59,33 @@ function calculateTime() {
   }
 }
 
-function calculateMonthlyPresence() {
+//function calculateMonthlyPresence() {
   // Prendiamo i valori dai campi di input
-  let daysWorked = parseInt(document.getElementById('daysWorked').value);
-  let daysOff = parseInt(document.getElementById('daysOff').value);
+//  let daysWorked = parseInt(document.getElementById('daysWorked').value);
+//  let daysOff = parseInt(document.getElementById('daysOff').value);
 
   // Controlliamo che i valori siano numeri validi
-  if (isNaN(daysWorked) || isNaN(daysOff)) {
-      document.getElementById('presenceResult').innerHTML = "Inserisci valori validi.";
-      return;
-  }
-  if (daysOff > daysWorked) {
-    document.getElementById('presenceResult').innerHTML = "Inserisci valori validi.";
-    return;
- }
- if ( (daysOff < 0 || daysWorked < 1) || (daysOff > 30 || daysWorked > 30 ) ) {
-  document.getElementById('presenceResult').innerHTML = "Inserisci valori validi.";
-  return;
- }
+//  if (isNaN(daysWorked) || isNaN(daysOff)) {
+//      document.getElementById('presenceResult').innerHTML = "Inserisci valori validi.";
+//      return;
+//  }
+//  if (daysOff > daysWorked) {
+//    document.getElementById('presenceResult').innerHTML = "Inserisci valori validi.";
+//    return;
+// }
+// if ( (daysOff < 0 || daysWorked < 1) || (daysOff > 30 || daysWorked > 30 ) ) {
+//  document.getElementById('presenceResult').innerHTML = "Inserisci valori validi.";
+//  return;
+// }
   // Calcoliamo la differenza e il 20% di questa differenza
-  let difference = daysWorked - daysOff;
-  let result = difference * 0.2;
-  let giornisede = Math.ceil(difference * 0.2);
+//  let difference = daysWorked - daysOff;
+//  let result = difference * 0.2;
+//  let giornisede = Math.ceil(difference * 0.2);
 
   // Mostriamo il risultato
-  document.getElementById('presenceResult').innerHTML = 
-      "Il 20% della differenza tra giorni lavorati e ferie è: " + result.toFixed(2) + "<br>Quindi devi andare in sede " + giornisede + " giorni";
-}
+//  document.getElementById('presenceResult').innerHTML = 
+//      "Il 20% della differenza tra giorni lavorati e ferie è: " + result.toFixed(2) + "<br>Quindi devi andare in sede " + giornisede + " giorni";
+//}
 
 function calculateWorkedWeeks() {
   const selectedMonth = parseInt(document.getElementById("selectedMonth").value);
@@ -108,8 +108,12 @@ function calculateWorkedWeeks() {
   const totalWeeks = weekSet.size;
   const weeksWorked = Math.max(totalWeeks - vacationWeeks, 0);
 
-  document.getElementById("weeksResult").innerHTML = 
-    "Settimane lavorative nel mese: <strong>" + totalWeeks + "</strong> &nbsp;|&nbsp; Dopo le ferie: <strong>" + weeksWorked + "</strong>";
+  document.getElementById("weeksResult").innerHTML = `
+  <strong>Settimane lavorative nel mese:</strong> ${totalWeeks} <br>
+  <strong>Dopo le ferie:</strong> ${weeksWorked}
+`;
+
+}
 
 // Calcolo numero settimana (ISO-8601)
 function getWeekNumber(d) {
@@ -120,6 +124,3 @@ function getWeekNumber(d) {
   const weekNo = Math.ceil(((date - yearStart) / 86400000 + 1) / 7);
   return weekNo;
 }
-
-
-
