@@ -9,15 +9,15 @@
 <body>
 	<div class="container">
     		<h1>Calcolatore Orario Uscita Giorni in Sede</h1>
-    		<div class="input-container">
+    	<div class="input-container">
       			<label for="inputTime">Inserisci l'orario di quando hai marcato:</label>
       			<input type="time" id="inputTime" value="08:00">
-    		</div>
-	<div class="input-container">
+    	</div>
+	    <div class="input-container">
     		<label for="additionalTime">Ore di lavoro:</label>
     		<input type="time" id="additionalTime" value="08:00">
-  	</div>
-  	<div>
+  	  </div>
+  	  <div>
       		<label for="pausapranzo">Minuti pausa pranzo:</label>
       		<select name="minutipausa" id="minutipausa">
 			<option value="30">30</option>
@@ -31,28 +31,45 @@
     	<img src="./img/pre-button-image.png" alt="Immagine Pre-Bottone" id="preButtonImage">
     	<button onclick="calculateTime()">Calcola la tua libertà</button>
     	<img src="./img/post-button-image.png" alt="Immagine Post-Bottone" id="postButtonImage" style="display: none;">
-	<img src="./img/third-image.png" alt="Terza Immagine" id="thirdImage" style="display: none;">
-        <img src="./img/cineseincu.jpg" alt="CineseIncu" id="cineseincu" style="display: none;">
+	    <img src="./img/third-image.png" alt="Terza Immagine" id="thirdImage" style="display: none;">
+      <img src="./img/cineseincu.jpg" alt="CineseIncu" id="cineseincu" style="display: none;">
     <p id="result"></p>
 
 
-	<div class="input-container">
-		<label for="daysWorked">Giorni Lavorativi del Mese:</label>
-		<input type="number" id="daysWorked" value="20">
-	</div>
-	<div class="input-container">
-		<label for="daysOff">Numero Giorni di Ferie:</label>
-		<input type="number" id="daysOff" value="0">
-	</div>
-	
-	<button onclick="calculateMonthlyPresence()">Calcola Presenza Mensile</button>
-	<p id="presenceResult"></p>
+    <hr>
+    <h2>Presenza mensile basata su settimane lavorative</h2>
+    
+    <div class="input-container">
+      <label for="selectedMonth">Seleziona il mese:</label>
+      <select id="selectedMonth">
+        <option value="0">Gennaio</option>
+        <option value="1">Febbraio</option>
+        <option value="2">Marzo</option>
+        <option value="3">Aprile</option>
+        <option value="4">Maggio</option>
+        <option value="5">Giugno</option>
+        <option value="6">Luglio</option>
+        <option value="7">Agosto</option>
+        <option value="8">Settembre</option>
+        <option value="9">Ottobre</option>
+        <option value="10">Novembre</option>
+        <option value="11">Dicembre</option>
+      </select>
+    </div>
+    
+    <div class="input-container">
+      <label for="vacationWeeks">Settimane complete di ferie:</label>
+      <input type="number" id="vacationWeeks" value="0" min="0">
+    </div>
+    
+    <button onclick="calculateWorkedWeeks()">Calcola Settimane di Presenza</button>
+    <p id="weeksResult"></p>
 	
   </div>
   
   <script src="script.js"></script>
   <a href="https://dona-ora.savethechildren.it/dona-anche-tu?form=rg&amount=_other_&bc=from-hp&op=yes&other=5" target="_blank" id="paypal-button">
-    ☕ e jamm offrl stu cafè a StC 
+    Dona a SaveTheChildren
 </a>
 
 <style>
