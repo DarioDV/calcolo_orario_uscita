@@ -108,8 +108,8 @@ function calculateWorkedWeeks() {
   const totalWeeks = weekSet.size;
   const weeksWorked = Math.max(totalWeeks - vacationWeeks, 0);
 
-  document.getElementById("weeksResult").textContent =
-    `Settimane lavorative nel mese: ${totalWeeks}. Giorni di lavoro in sede: ${weeksWorked}`;
+  document.getElementById("weeksResult").innerHTML = 
+    "Settimane lavorative nel mese: <strong>" + totalWeeks + "</strong> &nbsp;|&nbsp; Dopo le ferie: <strong>" + weeksWorked + "</strong>";
 
 // Calcolo numero settimana (ISO-8601)
 function getWeekNumber(d) {
@@ -120,5 +120,6 @@ function getWeekNumber(d) {
   const weekNo = Math.ceil(((date - yearStart) / 86400000 + 1) / 7);
   return weekNo;
 }
+
 
 
