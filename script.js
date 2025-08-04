@@ -86,3 +86,39 @@ function calculateMonthlyPresence() {
   document.getElementById('presenceResult').innerHTML = 
       "Il 20% della differenza tra giorni lavorati e ferie è: " + result.toFixed(2) + "<br>Quindi devi andare in sede " + giornisede + " giorni";
 }
+
+function calculateWorkedWeeks() {
+  const selectedMonth = parseInt(document.getElementById("selectedMonth").value);
+  const vacationWeeks = parseInt(document.getElementById("vacationWeeks").value);
+  const year = new Date().getFullYear();
+
+  const startDate = new Date(year, selectedMonth, 1);
+  const endDate = new Date(year, selectedMonth + 1, 0); // ultimo giorno del mese
+
+  let weekSet = new Set();
+
+  for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
+    const day = d.getDay();
+    if (day >= 1 && day <= 5) { // lun-ven
+      const weekNumber = getWeekNumber(new Date(d));
+      weekSet.add(weekNumber);
+    }
+  }
+
+  const totalWeeks = weekSet.size;
+  const weeksWorked = Math.max(totalWeeks - vacationWeeks, 0);
+
+  document.getElementById("weeksResult").textContent =
+    "Settimane lavorative nel mese: ${totalWeeks}. Quindi devi andare a lavoro: ${weeksWorked}";
+}
+
+// Calcolo numero settimana (ISO-8601)
+function getWeekNumber(d) {
+  const date = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+  const dayNum = date.getUTCDay() || 7;
+  date.setUTCDate(date.getUTCDate() + 4 - dayNum);
+  const yearStart = new Date(Date.UTC(date.getUTCFullYear(), 0, 1));
+  const weekNo = Math.ceil(((date - yearStart) / 86400000 + 1) / 7);
+  return weekNo;
+}
+
