@@ -107,8 +107,8 @@ function calculateWorkedWeeks() {
 
   const totalWeeks = weekSet.size;
   const weeksWorked = Math.max(totalWeeks - vacationWeeks, 0);
-  if (weeksWorked == 0) {
-    totalWeeks = 4;
+  if (vacationWeeks == 0) {
+    weeksWorked = 4;
   }
   document.getElementById("weeksResult").innerHTML = `
   Settimane lavorative nel mese: ${totalWeeks} <br>
@@ -126,4 +126,5 @@ function getWeekNumber(d) {
   const weekNo = Math.ceil(((date - yearStart) / 86400000 + 1) / 7);
   return weekNo;
 }
+
 
