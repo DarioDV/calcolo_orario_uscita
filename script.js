@@ -89,8 +89,21 @@ function calculateTime() {
 
 function calculateWorkedWeeks() {
   const selectedMonth = parseInt(document.getElementById("selectedMonth").value);
-  const vacationWeeks = parseInt(document.getElementById("vacationWeeks").value);
+  const vacationInput = document.getElementById("vacationWeeks");
   const year = new Date().getFullYear();
+
+  let vacationWeeks = parseInt(vacationInput.value);
+
+  // Validazione input ferie
+  if (isNaN(vacationWeeks) || vacationWeeks < 0) {
+    vacationInput.style.border = "2px solid red";
+    vacationInput.style.backgroundColor = "#ffe6e6";
+    document.getElementById("weeksResult").innerHTML = "❗ Inserisci un numero valido di settimane di ferie.";
+    return;
+  } else {
+    vacationInput.style.border = "";
+    vacationInput.style.backgroundColor = "";
+  }
 
   const startDate = new Date(year, selectedMonth, 1);
   const endDate = new Date(year, selectedMonth + 1, 0); // ultimo giorno del mese
@@ -106,15 +119,18 @@ function calculateWorkedWeeks() {
   }
 
   const totalWeeks = weekSet.size;
-  const weeksWorked = Math.max(totalWeeks - vacationWeeks, 0);
-  if (vacationWeeks == 0) {
-    weeksWorked = 4;
-  }
-  document.getElementById("weeksResult").innerHTML = `
-  Settimane lavorative nel mese: ${totalWeeks} <br>
-  Giorni in Presenza: ${weeksWorked}
-`;
+  let weeksWorked = Math.max(totalWeeks - vacationWeeks, 0);
 
+  // Gestione caso ferie = 0
+  if (vacationWeeks === 0) {
+    weeksWorked = 4; // valore personalizzabile
+  }
+
+  // Risultato visivo
+  document.getElementById("weeksResult").innerHTML = `
+    Settimane lavorative nel mese: ${totalWeeks} <br>
+    Giorni di Presenza: ${weeksWorked}
+  `;
 }
 
 // Calcolo numero settimana (ISO-8601)
@@ -126,5 +142,6 @@ function getWeekNumber(d) {
   const weekNo = Math.ceil(((date - yearStart) / 86400000 + 1) / 7);
   return weekNo;
 }
+
 
 
