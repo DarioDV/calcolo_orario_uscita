@@ -95,7 +95,7 @@ function calculateWorkedWeeks() {
   let vacationWeeks = parseInt(vacationInput.value);
 
   // Validazione input ferie
-  if (isNaN(vacationWeeks) || vacationWeeks < 0) {
+  if (isNaN(vacationWeeks) || vacationWeeks < 0 || vacationWeeks > 5) {
     vacationInput.style.border = "2px solid red";
     vacationInput.style.backgroundColor = "#ffe6e6";
     document.getElementById("weeksResult").innerHTML = "❗ Inserisci un numero valido di settimane di ferie.";
@@ -142,6 +142,7 @@ function getWeekNumber(d) {
   const weekNo = Math.ceil(((date - yearStart) / 86400000 + 1) / 7);
   return weekNo;
 }
+
 
 
 
