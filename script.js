@@ -26,7 +26,7 @@ function calculateTime() {
   document.getElementById('preButtonImage').style.display = 'none';
 
   if ((Number(inputTime) == 0) || (Number(additionalTime) == 0) ){ 
-    document.getElementById('result').innerText = "❗❗❗  Inserisci un valore corretto negli orari ❗❗❗";
+    document.getElementById('result').innerText = " Inserisci un valore corretto negli orari ❗❗❗";
     //rosso nelle label 
     labelInputTime.style.border = "2px solid red";
     labelInputTime.style.backgroundColor = "#ffe6e6";
@@ -158,6 +158,7 @@ function getWeekNumber(d) {
   const weekNo = Math.ceil(((date - yearStart) / 86400000 + 1) / 7);
   return weekNo;
 }
+
 
 
 
