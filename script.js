@@ -127,10 +127,8 @@ function calculateWorkedWeeks() {
   }
 
   // Risultato visivo
-  document.getElementById("weeksResult").innerHTML = `
-    Settimane lavorative nel mese: ${totalWeeks} <br>
-    Giorni di Presenza: ${weeksWorked}
-  `;
+  document.getElementById("weeksResult").innerHTML = "Settimane lavorative nel mese: " + totalWeeks + "<br>" +
+    "Giorni di Presenza: " + weeksWorked ;
 }
 
 // Calcolo numero settimana (ISO-8601)
@@ -142,6 +140,7 @@ function getWeekNumber(d) {
   const weekNo = Math.ceil(((date - yearStart) / 86400000 + 1) / 7);
   return weekNo;
 }
+
 
 
 
