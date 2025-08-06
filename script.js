@@ -8,7 +8,7 @@ function calculateTime() {
   var additionalTime = document.getElementById('additionalTime').value;
   var tempopausapranzo = document.getElementById('minutipausa').value;
   var labelInputTime = document.getElementById('inputTime');
-  
+  var labelAdditionalTime = document.getElementById('additionalTime');
   var time = new Date("2024-01-01T" + inputTime + ":00");
 
   var additionalHours = parseInt(additionalTime.substring(0, 2));
@@ -26,9 +26,13 @@ function calculateTime() {
   document.getElementById('preButtonImage').style.display = 'none';
 
   if ((Number(inputTime) == 0) || (Number(additionalTime) == 0) ){ 
-    document.getElementById('result').innerText = "❗ Inserisci un valore corretto negli orari !!";
+    document.getElementById('result').innerText = "❗❗❗  Inserisci un valore corretto negli orari ❗❗❗";
+    //rosso nelle label 
     labelInputTime.style.border = "2px solid red";
     labelInputTime.style.backgroundColor = "#ffe6e6";
+    labelAdditionalTime.style.border = "2px solid red";
+    labelAdditionalTime.style.backgroundColor = "#ffe6e6";
+    //visualizzazioni immagini
     document.getElementById('postButtonImage').style.display = 'none';
     document.getElementById('thirdImage').style.display = 'none';
     //document.getElementById('cineseincu').style.display = 'inline';
@@ -42,6 +46,8 @@ function calculateTime() {
     document.getElementById('cineseincu').style.display = 'none';
     labelInputTime.style.border = "";
     labelInputTime.style.backgroundColor = "";
+    labelAdditionalTime.style.border = "";
+    labelAdditionalTime.style.backgroundColor = "";
   } else {
     document.getElementById('result').innerText = "Fantastico potevi marcare alle " + resultTime;
     document.getElementById('thirdImage').style.display = 'none';
@@ -49,6 +55,8 @@ function calculateTime() {
     document.getElementById('cineseincu').style.display = 'none';
     labelInputTime.style.border = "";
     labelInputTime.style.backgroundColor = "";
+    labelAdditionalTime.style.border = "";
+    labelAdditionalTime.style.backgroundColor = "";
 
     for (var i = 0; i < 20; i++) {
       setTimeout(function () {
@@ -150,6 +158,7 @@ function getWeekNumber(d) {
   const weekNo = Math.ceil(((date - yearStart) / 86400000 + 1) / 7);
   return weekNo;
 }
+
 
 
 
