@@ -31,17 +31,24 @@ function calculateTime() {
     labelInputTime.style.backgroundColor = "#ffe6e6";
     document.getElementById('postButtonImage').style.display = 'none';
     document.getElementById('thirdImage').style.display = 'none';
-    document.getElementById('cineseincu').style.display = 'inline';
+    //document.getElementById('cineseincu').style.display = 'inline';
+    const image = document.getElementById("cineseincu");
+    image.style.display = "block";
+    image.style.margin = "20px auto";
   } else if (resultTime > currentTime.toLocaleTimeString()) {
     document.getElementById('result').innerText = "Troppo presto! Devi aspettare le " + resultTime;
     document.getElementById('postButtonImage').style.display = 'none';
     document.getElementById('thirdImage').style.display = 'inline';
     document.getElementById('cineseincu').style.display = 'none';
+    labelInputTime.style.border = "";
+    labelInputTime.style.backgroundColor = "";
   } else {
     document.getElementById('result').innerText = "Fantastico potevi marcare alle " + resultTime;
     document.getElementById('thirdImage').style.display = 'none';
     document.getElementById('postButtonImage').style.display = 'inline';
     document.getElementById('cineseincu').style.display = 'none';
+    labelInputTime.style.border = "";
+    labelInputTime.style.backgroundColor = "";
 
     for (var i = 0; i < 20; i++) {
       setTimeout(function () {
@@ -143,6 +150,7 @@ function getWeekNumber(d) {
   const weekNo = Math.ceil(((date - yearStart) / 86400000 + 1) / 7);
   return weekNo;
 }
+
 
 
 
