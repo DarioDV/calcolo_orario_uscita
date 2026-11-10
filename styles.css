@@ -3,11 +3,12 @@ body {
   background-color: #f5f5f5;
   margin: 0;
   padding: 0;
+  overflow-x: hidden;
 }
 
 .container {
   max-width: 400px;
-  margin: 50px auto;
+  margin: 50px auto 100px auto;
   background-color: #fff;
   padding: 20px;
   border-radius: 8px;
@@ -29,7 +30,9 @@ label {
   color: #555;
 }
 
-input[type="time"] {
+input[type="time"],
+input[type="number"],
+select {
   width: calc(100% - 12px);
   padding: 6px;
   border: 1px solid #ccc;
@@ -58,7 +61,7 @@ p {
   font-weight: bold;
 }
 
-/* Aggiungi stili per le immagini */
+/* Immagini */
 img {
   display: block;
   margin: 0 auto;
@@ -66,24 +69,124 @@ img {
   height: auto;
   margin-bottom: 20px;
 }
-@keyframes confetti {
-  0% {
-    transform: translateY(0) rotate(0deg);
-  }
 
+/* Confetti / Bolle pazze */
+@keyframes confetti-fall {
+  0% {
+    transform: translateY(0) rotate(0deg) scale(1);
+    opacity: 1;
+  }
   100% {
-    transform: translateY(50vh) rotate(360deg);
+    transform: translateY(110vh) rotate(var(--rotation, 360deg)) scale(var(--end-scale, 0.5));
+    opacity: 0;
   }
 }
 
 .confetti {
   position: fixed;
-  width: 100px;
-  height: 100px;
-  background-image: url('img/post-button-image.png');
+  top: -120px;
+  z-index: 1000;
+  pointer-events: none;
+  border-radius: var(--border-radius, 50%);
+  opacity: 1;
+  animation: confetti-fall var(--fall-duration, 3s) ease-in forwards;
+}
+
+.confetti.is-image {
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
-  z-index: 1000;
-  animation: confetti 3s ease-out infinite;
+  background-image: url('img/post-button-image.png');
+  border-radius: 0;
+}
+
+/* Tasto SaveTheChildren che scappa */
+#paypal-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #007bff;
+  color: white;
+  padding: 12px 18px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.25);
+  transition: transform 0.15s ease-out, background-color 0.2s;
+  z-index: 999;
+  cursor: pointer;
+  user-select: none;
+  font-size: 14px;
+}
+
+#paypal-button:hover {
+  background-color: #0056b3;
+}
+
+/* Tasto Dona a Dario che cresce */
+#dario-button {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  background: linear-gradient(135deg, #FFD700, #FF8C00);
+  color: #222;
+  padding: 10px 18px;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 800;
+  box-shadow: 0 4px 20px rgba(255, 165, 0, 0.5), 0 0 10px rgba(255, 215, 0, 0.6);
+  cursor: pointer;
+  z-index: 1001;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  font-size: 14px;
+  user-select: none;
+  border: 3px solid #fff;
+}
+
+#dario-button:hover {
+  transform: scale(1.08);
+  box-shadow: 0 6px 25px rgba(255, 140, 0, 0.7), 0 0 15px rgba(255, 215, 0, 0.8);
+}
+
+#dario-photo {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid white;
+  margin: 0;
+  display: block;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  transition: width 0.25s, height 0.25s;
+  background-color: #ffcc00;
+}
+
+@keyframes shake-dario {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  20% { transform: scale(1.15) rotate(-6deg); }
+  40% { transform: scale(1.18) rotate(6deg); }
+  60% { transform: scale(1.15) rotate(-4deg); }
+  80% { transform: scale(1.12) rotate(4deg); }
+}
+
+@keyframes money-float {
+  0% {
+    transform: translateY(0) scale(0.6);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-120px) scale(1.4);
+    opacity: 0;
+  }
+}
+
+.money-sparkle {
+  position: fixed;
+  pointer-events: none;
+  z-index: 1002;
+  font-size: 24px;
+  animation: money-float 1.2s ease-out forwards;
 }
