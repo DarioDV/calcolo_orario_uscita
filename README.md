@@ -1,6 +1,6 @@
 # 🕒 Calcolatore Orario Uscita & Gestione Presenze
 
-> Un'applicazione web simpatica, utile e indispensabile per calcolare esattamente l'orario in cui scatta la tua meritata libertà nei giorni di lavoro in sede! 🚀
+> Un'applicazione web simpatica, utile e indispensabile per calcolare esattamente l'orario in cui scatta la tua meritata libertà nei giorni di lavoro! 🚀🚀
 
 [![GitHub Pages](https://img.shields.io/badge/Demo-GitHub%20Pages-brightgreen?logo=github)](https://dariodv.github.io/calcolo_orario_uscita/)
 [![Tech Stack](https://img.shields.io/badge/Tech-HTML5%20%7C%20CSS3%20%7C%20JavaScript-blue)](#-tecnologie)
@@ -82,4 +82,4 @@ Visita direttamente la versione live su GitHub Pages:
 
 ---
 
-*Realizzato con ❤️ (e tanta voglia di uscire alle 18:00 precise)*
+*Realizzato con ❤️ (e tanta voglia di staccare da lavoro)*
