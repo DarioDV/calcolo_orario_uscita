@@ -321,11 +321,11 @@ function cresciDario(event) {
     'DI PIÙ! 💸',
     'ANCORA! 🤑',
     'DARIO MERITA! 👑',
-    'TUTTO A DARIO! 💎',
-    'IL VERO BENEFATTORE! 🏆',
-    'DARIO DIVENTERÀ RICCO! 🚀',
-    'SHUT UP AND TAKE MY MONEY! 💵',
-    'SEI IL MIGLIORE! 🥇',
+    'DARIO IL NOSTRO EROE! 💎',
+    'IL NOSTRO RSU! 🏆',
+    'DARIO DIVENTERÀ RICCO E NON SI DIMENTICHERA TI TE! 🚀',
+    'SHUT UP AND TAKE YOUR MONEY! 💵',
+    'CHE NE DEVI FARE DI QUESTI SOLDI DALLI A DARIO! 🥇',
     'STIPENDIO DEVOLUTO A DARIO! 🥳🎉'
   ];
   var msgIndex = Math.min(darioClickCount - 1, messaggi.length - 1);
