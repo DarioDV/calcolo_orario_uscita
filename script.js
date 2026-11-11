@@ -281,6 +281,9 @@ function scappaBottone(btn) {
   // Messaggi random mentre scappa
   var messaggi = [
     'Non mi prendi! 😜',
+    'Dona a Dario , Fai prima ! 😜',
+    'E offrilo sto caffè! ☕',
+    'Dai che ce la fai! 💪 , altrimenti paga un caffè a Dario ☕',
     'Troppo lento! 🏃‍♂️',
     'Prova ancora! 😂',
     'Quasi! 🤣',
