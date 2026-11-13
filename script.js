@@ -33,10 +33,11 @@ function calculateTime() {
     resultTime = "18:00";
     hours = "18";
     minutes = "00";
+    var eccOreTxt = eccOre === 1 ? "1 ora" : eccOre + " ore";
     if (eccOre > 0 && eccMin > 0) {
-      permessoUscitaMsg = "\n🕕 Uscita fissata alle 18:00, devi prendere " + eccOre + " ora/e e " + eccMin + " minuti di permesso.";
+      permessoUscitaMsg = "\n🕕 Uscita fissata alle 18:00, devi prendere " + eccOreTxt + " e " + eccMin + " minuti di permesso.";
     } else if (eccOre > 0) {
-      permessoUscitaMsg = "\n🕕 Uscita fissata alle 18:00, devi prendere " + eccOre + " ora/e di permesso.";
+      permessoUscitaMsg = "\n🕕 Uscita fissata alle 18:00, devi prendere " + eccOreTxt + " di permesso.";
     } else {
       permessoUscitaMsg = "\n🕕 Uscita fissata alle 18:00, devi prendere " + eccMin + " minuti di permesso.";
     }
@@ -58,10 +59,12 @@ function calculateTime() {
     var permessoMinuti = Math.ceil(ritardoMinuti / 30) * 30;
     var permessoOre = Math.floor(permessoMinuti / 60);
     var permessoMin = permessoMinuti % 60;
+    var permessoOreTxt = permessoOre === 1 ? "1 ora" : permessoOre + " ore";
+
     if (permessoOre > 0 && permessoMin > 0) {
-      permessoMsg = "\n⚠️ Hai marcato dopo le 9:30! Devi prendere " + permessoOre + " ora/e e " + permessoMin + " minuti di permesso.";
+      permessoMsg = "\n⚠️ Hai marcato dopo le 9:30! Devi prendere " + permessoOreTxt + " e " + permessoMin + " minuti di permesso.";
     } else if (permessoOre > 0) {
-      permessoMsg = "\n⚠️ Hai marcato dopo le 9:30! Devi prendere " + permessoOre + " ora/e di permesso.";
+      permessoMsg = "\n⚠️ Hai marcato dopo le 9:30! Devi prendere " + permessoOreTxt + " di permesso.";
     } else {
       permessoMsg = "\n⚠️ Hai marcato dopo le 9:30! Devi prendere " + permessoMin + " minuti di permesso.";
     }
@@ -72,7 +75,7 @@ function calculateTime() {
   resultDate.setHours(parseInt(hours), parseInt(minutes), 0, 0);
 
   if (!inputTime || !additionalTime) { 
-    document.getElementById('result').innerText = " Inserisci un valore corretto negli orari ❗❗❗";
+    document.getElementById('result').innerText = "Inserisci un valore corretto negli orari ❗❗❗";
     //rosso nelle label 
     labelInputTime.style.border = "2px solid red";
     labelInputTime.style.backgroundColor = "#ffe6e6";
@@ -88,14 +91,18 @@ function calculateTime() {
   } else if (resultDate > currentTime) {
     document.getElementById('result').innerText = "Troppo presto! Devi aspettare le " + resultTime + permessoMsg + permessoUscitaMsg;
     document.getElementById('postButtonImage').style.display = 'none';
-    document.getElementById('thirdImage').style.display = 'inline';
+    var thirdImg = document.getElementById('thirdImage');
+    var randomThirdIndex = Math.floor(Math.random() * 3); // 0, 1 o 2
+    thirdImg.src = './img/third-image-' + randomThirdIndex + '.png';
+    thirdImg.style.display = 'block';
+    thirdImg.style.margin = '20px auto';
     document.getElementById('cineseincu').style.display = 'none';
     labelInputTime.style.border = "";
     labelInputTime.style.backgroundColor = "";
     labelAdditionalTime.style.border = "";
     labelAdditionalTime.style.backgroundColor = "";
   } else {
-    document.getElementById('result').innerText = "Fantastico potevi marcare alle " + resultTime + permessoMsg + permessoUscitaMsg;
+    document.getElementById('result').innerText = "Fantastico! Potevi marcare alle " + resultTime + permessoMsg + permessoUscitaMsg;
     document.getElementById('thirdImage').style.display = 'none';
     document.getElementById('postButtonImage').style.display = 'inline';
     document.getElementById('cineseincu').style.display = 'none';
@@ -213,20 +220,8 @@ function calculateTime() {
 function calculateWorkedWeeks() {
   const selectedMonth = parseInt(document.getElementById("selectedMonth").value);
   const vacationInput = document.getElementById("vacationWeeks");
+  const weeksResult = document.getElementById("weeksResult");
   const year = new Date().getFullYear();
-
-  let vacationWeeks = parseInt(vacationInput.value);
-
-  // Validazione input ferie
-  if (isNaN(vacationWeeks) || vacationWeeks < 0 || vacationWeeks > 5) {
-    vacationInput.style.border = "2px solid red";
-    vacationInput.style.backgroundColor = "#ffe6e6";
-    document.getElementById("weeksResult").innerHTML = "❗ Inserisci un numero valido di settimane di ferie.";
-    return;
-  } else {
-    vacationInput.style.border = "";
-    vacationInput.style.backgroundColor = "";
-  }
 
   const startDate = new Date(year, selectedMonth, 1);
   const endDate = new Date(year, selectedMonth + 1, 0); // ultimo giorno del mese
@@ -242,11 +237,48 @@ function calculateWorkedWeeks() {
   }
 
   const totalWeeks = weekSet.size;
-  let weeksWorked = Math.max(totalWeeks - vacationWeeks, 0);
+  vacationInput.max = totalWeeks;
+
+  let vacationWeeks = parseInt(vacationInput.value);
+
+  // Validazione input ferie
+  if (isNaN(vacationWeeks) || vacationWeeks < 0 || vacationWeeks > totalWeeks) {
+    vacationInput.style.border = "2px solid red";
+    vacationInput.style.backgroundColor = "#ffe6e6";
+    weeksResult.innerHTML = "❗ Inserisci un numero valido di settimane di ferie (da 0 a " + totalWeeks + " per questo mese).";
+    return;
+  } else {
+    vacationInput.style.border = "";
+    vacationInput.style.backgroundColor = "";
+  }
+
+  // Settimane lavorative effettive al netto delle ferie
+  const weeksWorked = Math.max(totalWeeks - vacationWeeks, 0);
+
+  // REGOLA AZIENDALE PRESENZE:
+  // - Il numero massimo di presenza è 4 in un mese.
+  // - Se il mese è da 5 settimane e si fa 1 settimana intera di ferie: 5 - 1 = 4 settimane lavorate -> non passa a 3 ma resta 4.
+  // - Se il mese è da 4 settimane e si fa 1 settimana intera di ferie: 4 - 1 = 3 settimane lavorate -> passa a 3.
+  // - Formula generale: presenze = Math.min(4, weeksWorked).
+  const maxPresenze = 4;
+  const giorniPresenza = Math.min(maxPresenze, weeksWorked);
+
+  // Messaggio esplicativo sulla regola aziendale
+  let spiegazioneRegola = "";
+  if (totalWeeks === 5 && vacationWeeks === 1) {
+    spiegazioneRegola = "<br><span style='display:inline-block; margin-top:8px; font-size:13px; color:#2e7d32; font-weight:normal;'>ℹ️ Regola aziendale: mese da 5 settimane con 1 settimana di ferie = 4 settimane lavorate, quindi le presenze <strong>restano 4</strong> (non scendono a 3).</span>";
+  } else if (totalWeeks === 5 && vacationWeeks === 0) {
+    spiegazioneRegola = "<br><span style='display:inline-block; margin-top:8px; font-size:13px; color:#0277bd; font-weight:normal;'>ℹ️ Regola aziendale: il mese ha 5 settimane lavorative, ma il numero massimo di presenze mensili è <strong>4</strong>.</span>";
+  } else if (totalWeeks === 4 && vacationWeeks === 1) {
+    spiegazioneRegola = "<br><span style='display:inline-block; margin-top:8px; font-size:13px; color:#2e7d32; font-weight:normal;'>ℹ️ Regola aziendale: mese da 4 settimane con 1 settimana di ferie = 3 settimane lavorate, le presenze <strong>passano a 3</strong>.</span>";
+  }
 
   // Risultato visivo
-  document.getElementById("weeksResult").innerHTML = "Settimane lavorative nel mese: " + totalWeeks + "<br>" +
-    "Giorni di Presenza: " + weeksWorked ;
+  weeksResult.innerHTML = "Settimane lavorative nel mese: " + totalWeeks + "<br>" +
+    "Settimane di ferie: " + vacationWeeks + "<br>" +
+    "Settimane lavorate: " + weeksWorked + "<br>" +
+    "<strong>Giorni di presenza in sede: " + giorniPresenza + "</strong>" +
+    spiegazioneRegola;
 }
 
 // Calcolo numero settimana (ISO-8601)
@@ -258,6 +290,14 @@ function getWeekNumber(d) {
   const weekNo = Math.ceil(((date - yearStart) / 86400000 + 1) / 7);
   return weekNo;
 }
+
+// Pre-seleziona il mese corrente al caricamento
+window.addEventListener("DOMContentLoaded", function () {
+  var monthSelect = document.getElementById("selectedMonth");
+  if (monthSelect) {
+    monthSelect.value = new Date().getMonth();
+  }
+});
 
 
 // --- FUNZIONALITÀ TASTI DONAZIONI ---
@@ -281,9 +321,9 @@ function scappaBottone(btn) {
   // Messaggi random mentre scappa
   var messaggi = [
     'Non mi prendi! 😜',
-    'Dona a Dario , Fai prima ! 😜',
-    'E offrilo sto caffè! ☕',
-    'Dai che ce la fai! 💪 , altrimenti paga un caffè a Dario ☕',
+    'Dona a Dario, fai prima! 😜',
+    "E offrilo 'sto caffè! ☕",
+    'Dai, puoi farcela! 💪 Altrimenti paga un caffè a Dario ☕',
     'Troppo lento! 🏃‍♂️',
     'Prova ancora! 😂',
     'Quasi! 🤣',
@@ -296,42 +336,91 @@ function scappaBottone(btn) {
   btn.innerText = messaggi[Math.floor(Math.random() * messaggi.length)];
 }
 
-// Tasto Dona a Dario che cresce
+// Rilevamento dispositivo mobile
+function isMobileDevice() {
+  return window.innerWidth <= 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+}
+
+// Tasto Dona a Dario che cresce (Desktop) o rimane piccolo/solo foto (Mobile)
 var darioClickCount = 0;
-function cresciDario(event) {
-  darioClickCount++;
+var stipendioClickCount = 0;
+
+function resetDario() {
+  darioClickCount = 0;
+  stipendioClickCount = 0;
   var btn = document.getElementById('dario-button');
   var photo = document.getElementById('dario-photo');
   var textSpan = document.getElementById('dario-text');
 
-  // Dimensioni che crescono gradualmente
-  var newFontSize = Math.min(14 + darioClickCount * 2.5, 34);
-  var newPaddingY = Math.min(10 + darioClickCount * 2, 25);
-  var newPaddingX = Math.min(18 + darioClickCount * 3.5, 50);
-  var newPhotoSize = Math.min(38 + darioClickCount * 9, 130);
+  btn.style.fontSize = '';
+  btn.style.padding = '';
+  btn.style.background = '';
+  photo.style.width = '';
+  photo.style.height = '';
+  textSpan.innerText = 'Dona a Dario 💰';
+}
 
-  btn.style.fontSize = newFontSize + 'px';
-  btn.style.padding = newPaddingY + 'px ' + newPaddingX + 'px';
-  photo.style.width = newPhotoSize + 'px';
-  photo.style.height = newPhotoSize + 'px';
+function cresciDario(event) {
+  var isMobile = isMobileDevice();
+  var btn = document.getElementById('dario-button');
+  var photo = document.getElementById('dario-photo');
+  var textSpan = document.getElementById('dario-text');
 
-  // Testo divertente che cambia
-  var messaggi = [
-    'Dona a Dario 💰',
-    'DI PIÙ! 💸',
-    'ANCORA! 🤑',
-    'DARIO MERITA! 👑',
-    'DARIO IL NOSTRO EROE! 💎',
-    'IL NOSTRO RSU! 🏆',
-    'DARIO DIVENTERÀ RICCO E NON SI DIMENTICHERA TI TE! 🚀',
-    'SHUT UP AND TAKE YOUR MONEY! 💵',
-    'CHE NE DEVI FARE DI QUESTI SOLDI DALLI A DARIO! 🥇',
-    'STIPENDIO DEVOLUTO A DARIO! 🥳🎉'
-  ];
-  var msgIndex = Math.min(darioClickCount - 1, messaggi.length - 1);
-  textSpan.innerText = messaggi[msgIndex];
+  if (!isMobile) {
+    var messaggi = [
+      'Dona a Dario 💰',
+      'DI PIÙ! 💸',
+      'ANCORA! 🤑',
+      'DARIO MERITA! 👑',
+      'TUTTO A DARIO! 💎',
+      'IL VERO BENEFATTORE! 🏆',
+      'DARIO DIVENTERÀ RICCO! 🚀',
+      'SHUT UP AND TAKE MY MONEY! 💵',
+      'AIUTA DARIO! 2 FIGLI A CARICO! 🏆',
+      'DARIO NON SI DIMENTICHERA DI TE! 💵',
+      'SEI IL MIGLIORE! 🥇',
+      'DONA LO STIPENDIO A DARIO! 🥳🎉'
+    ];
 
-  // Palette di sfondi accattivanti a rotazione
+    // Se siamo già arrivati all'ultimo livello ("DONA LO STIPENDIO A DARIO!")
+    if (darioClickCount >= messaggi.length) {
+      stipendioClickCount++;
+      // Dopo 2-3 click sul livello massimo, ritorna alla prima frase e grandezza originale
+      if (stipendioClickCount >= 2) {
+        resetDario();
+        btn.style.animation = 'none';
+        void btn.offsetWidth;
+        btn.style.animation = 'shake-dario 0.35s ease';
+        creaSparkle(event);
+        return;
+      }
+    } else {
+      darioClickCount++;
+    }
+
+    // Desktop: cresce con scritte esilaranti e dimensioni maggiorate
+    var newFontSize = Math.min(14 + darioClickCount * 2.5, 34);
+    var newPaddingY = Math.min(10 + darioClickCount * 2, 25);
+    var newPaddingX = Math.min(18 + darioClickCount * 3.5, 50);
+    var newPhotoSize = Math.min(38 + darioClickCount * 9, 130);
+
+    btn.style.fontSize = newFontSize + 'px';
+    btn.style.padding = newPaddingY + 'px ' + newPaddingX + 'px';
+    photo.style.width = newPhotoSize + 'px';
+    photo.style.height = newPhotoSize + 'px';
+
+    var msgIndex = Math.min(darioClickCount - 1, messaggi.length - 1);
+    textSpan.innerText = messaggi[msgIndex];
+  } else {
+    // Mobile: piccolo e discreto, solo la foto (nessun testo invasivo)
+    darioClickCount++;
+    btn.style.fontSize = '';
+    btn.style.padding = '';
+    photo.style.width = '';
+    photo.style.height = '';
+  }
+
+  // Palette di sfondi accattivanti a rotazione (funziona sia desktop che mobile)
   var gradienti = [
     'linear-gradient(135deg, #FFD700, #FF8C00)',
     'linear-gradient(135deg, #00F260, #0575E6)',
@@ -348,13 +437,28 @@ function cresciDario(event) {
   void btn.offsetWidth; // forza reflow
   btn.style.animation = 'shake-dario 0.35s ease';
 
-  // Effetto monetine / gemme volanti dal click
+  // Effetto monetine / gemme volanti dal click/tap
   creaSparkle(event);
 }
 
 function creaSparkle(event) {
-  var x = event && event.clientX ? event.clientX : 50;
-  var y = event && event.clientY ? event.clientY : window.innerHeight - 50;
+  var x = 50;
+  var y = window.innerHeight - 50;
+
+  if (event) {
+    if (event.clientX && event.clientY) {
+      x = event.clientX;
+      y = event.clientY;
+    } else if (event.touches && event.touches[0]) {
+      x = event.touches[0].clientX;
+      y = event.touches[0].clientY;
+    } else if (event.target) {
+      var rect = event.target.getBoundingClientRect();
+      x = rect.left + rect.width / 2;
+      y = rect.top + rect.height / 2;
+    }
+  }
+
   var simboli = ['💸', '💰', '👑', '🪙', '⭐', '🤑', '💎', '✨'];
 
   for (var i = 0; i < 4; i++) {

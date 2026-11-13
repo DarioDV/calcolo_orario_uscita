@@ -40,7 +40,7 @@
     <img src="./img/pre-button-image.png" alt="Immagine Pre-Bottone" id="preButtonImage">
     <button onclick="calculateTime()">Calcola la tua libertà</button>
     <img src="./img/post-button-image.png" alt="Immagine Post-Bottone" id="postButtonImage" style="display: none;">
-    <img src="./img/third-image.png" alt="Terza Immagine" id="thirdImage" style="display: none;">
+    <img src="./img/third-image-0.png" alt="Terza Immagine" id="thirdImage" style="display: none;">
     <img src="./img/cineseincu.jpg" alt="CineseIncu" id="cineseincu" style="display: none;">
     <p id="result"></p>
 
@@ -49,7 +49,7 @@
     
     <div class="input-container">
       <label for="selectedMonth">Seleziona il mese:</label>
-      <select id="selectedMonth">
+      <select id="selectedMonth" onchange="if(document.getElementById('weeksResult').innerHTML) calculateWorkedWeeks();">
         <option value="0">Gennaio</option>
         <option value="1">Febbraio</option>
         <option value="2">Marzo</option>
@@ -67,10 +67,10 @@
     
     <div class="input-container">
       <label for="vacationWeeks">Settimane complete di ferie:</label>
-      <input type="number" id="vacationWeeks" value="0" min="0">
+      <input type="number" id="vacationWeeks" value="0" min="0" max="5">
     </div>
     
-    <button onclick="calculateWorkedWeeks()">Calcola Numero di Presenza</button>
+    <button onclick="calculateWorkedWeeks()">Calcola Numero di Presenze</button>
     <p id="weeksResult"></p>
   </div>
   
@@ -83,8 +83,8 @@
     Dona a SaveTheChildren
   </a>
 
-  <!-- Tasto Dona a Dario che cresce -->
-  <div id="dario-button" onclick="cresciDario(event)">
+  <!-- Tasto Dona a Dario che cresce (Desktop) / compatto solo foto (Mobile) -->
+  <div id="dario-button" onclick="cresciDario(event)" title="Dona a Dario!">
     <img src="./img/dario.jpeg" alt="Dario" id="dario-photo" onerror="this.onerror=null; this.src='./img/post-button-image.png';">
     <span id="dario-text">Dona a Dario 💰</span>
   </div>
